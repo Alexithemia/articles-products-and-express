@@ -15,14 +15,12 @@ function find(id) {
 }
 
 function add(data) {
-  console.log('add');
   data.id = idCount.toString();
   prod.push(data);
   return idCount++;
 };
 
 function remove(id) {
-  console.log('delete');
   let found = false;
   prod.forEach(product => {
     if (product.id === id) {
@@ -34,8 +32,6 @@ function remove(id) {
 }
 
 function change(data, id) {
-  console.log('edit');
-
   let found = false;
   prod.forEach(product => {
     if (product.id === id) {

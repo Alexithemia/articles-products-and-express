@@ -26,18 +26,12 @@ app.use(function (req, res, next) {
   next();
 })
 
-app.use('/products', products);
+app.use('/products', pValid, products);
 
-app.use('/articles', function (req, res, next) {
-  console.log(req.headers.version);
-  if (req.headers.version === '1.0') {
-    next();
-  } else {
-    res.json({ "error": "bad headers" });
-  }
-})
-app.use('/articles', articles);
+app.use('/articles', aValid, articles);
 
 app.listen(PORT, function () {
   console.log(`Server running on port: ${PORT}`);
 });
+
+module.exports = app;

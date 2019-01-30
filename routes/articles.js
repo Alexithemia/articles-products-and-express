@@ -7,6 +7,8 @@ router.route('/')
     res.render('articles/index', articlesDB.articles);
   })
   .post(function (req, res) {
+    console.log('post');
+
     let title = articlesDB.add(req.body);
     if (title) {
       res.redirect('/articles/' + title);

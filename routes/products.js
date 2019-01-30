@@ -29,21 +29,23 @@ router.route('/:id')
     if (productsDB.change(req.body, req.params.id)) {
       res.redirect('/products/' + req.params.id);
     } else {
-      res.send('That product does not exist');
+      res.status(500).send('That product does not exist');
     }
   })
   .delete(function (req, res) {
     if (productsDB.remove(req.params.id)) {
       res.redirect('/products');
     } else {
-      res.send('That product does not exist');
+      res.status(500).send('That product does not exist');
     }
   });
 
 router.route('/:id/edit')
   .get(function (req, res) {
     let item = productsDB.find(req.params.id);
-    if (!item) { res.render('404', item) }
+    console.log(item);
+
+    if (!item) { return res.status(404).render('404', item) }
     res.render('products/edit', item);
   })
 
