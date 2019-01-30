@@ -1,0 +1,12 @@
+<h1>Edit Product</h1>
+<form id='editForm' action="/products/{{this.id}}?_method=PUT" method="post">
+  <input type="hidden" name="_method" value="PUT">
+  <input type="hidden" name="id" value="{{this.id}}">
+  Product Name:
+  <input type="text" name='name' value="{{this.name}}">
+  Product Price:
+  <input type="text" name='price' value="{{this.price}}">
+  Product Inventory:
+  <input type="text" name='inventory' value="{{this.inventory}}">
+</form>
+<button type="submit" form='editForm' value="Submit">Submit</button>

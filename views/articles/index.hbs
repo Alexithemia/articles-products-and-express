@@ -1,0 +1,10 @@
+<h1>Articles</h1>
+{{#each articleList}}
+<li>
+  {{this.title}}
+  <ul>
+    <li>Author: {{this.author}}</li>
+    <p>{{this.body}}</p>
+  </ul>
+</li>
+{{/each}}

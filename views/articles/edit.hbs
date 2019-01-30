@@ -1,0 +1,12 @@
+<h1>Edit Article</h1>
+<form id='editForm' action="/articles/{{this.urlTitle}}?_method=PUT" method="post">
+  <input type="hidden" name="_method" value="PUT">
+  <input type="hidden" name="urlTitle" value="{{this.urlTitle}}">
+  Article Title:
+  <input type="text" name='title' value="{{this.title}}">
+  Article Author:
+  <input type="text" name='author' value="{{this.author}}">
+  Article Body:
+  <input type="text" name='body' value="{{this.body}}">
+</form>
+<button type="submit" form='editForm' value="Submit">Submit</button>
