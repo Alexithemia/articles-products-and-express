@@ -20,7 +20,7 @@ router.route('/:id')
   .get(function (req, res) {
     let item = productsDB.find(req.params.id);
     if (!item) {
-      res.render('404')
+      res.status(404).render('404');
     } else {
       res.render('products/product', item);
     }
@@ -29,23 +29,21 @@ router.route('/:id')
     if (productsDB.change(req.body, req.params.id)) {
       res.redirect('/products/' + req.params.id);
     } else {
-      res.status(500).send('That product does not exist');
+      res.redirect(400, '/products');
     }
   })
   .delete(function (req, res) {
     if (productsDB.remove(req.params.id)) {
       res.redirect('/products');
     } else {
-      res.status(500).send('That product does not exist');
+      res.redirect(400, '/products');
     }
   });
 
 router.route('/:id/edit')
   .get(function (req, res) {
     let item = productsDB.find(req.params.id);
-    console.log(item);
-
-    if (!item) { return res.status(404).render('404', item) }
+    if (!item) { return res.status(404).render('404') }
     res.render('products/edit', item);
   })
 

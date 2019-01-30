@@ -7,13 +7,11 @@ router.route('/')
     res.render('articles/index', articlesDB.articles);
   })
   .post(function (req, res) {
-    console.log('post');
-
     let title = articlesDB.add(req.body);
     if (title) {
       res.redirect('/articles/' + title);
     } else {
-      res.send('That article already exists');
+      res.redirect('/articles/new');
     };
   });
 
@@ -26,7 +24,7 @@ router.route('/:title')
   .get(function (req, res) {
     let item = articlesDB.find(req.params.title);
     if (!item) {
-      res.render('404');
+      res.status(404).render('404');
     } else {
       res.render('articles/article', item);
     }
@@ -36,14 +34,14 @@ router.route('/:title')
     if (result) {
       res.redirect('/articles/' + result);
     } else {
-      res.send('That article does not exist');
+      res.redirect(400, '/articles');
     }
   })
   .delete(function (req, res) {
     if (articlesDB.remove(req.params.title)) {
       res.redirect('/articles');
     } else {
-      res.send('That article does not exist');
+      res.redirect(400, '/articles');
     }
   });
 

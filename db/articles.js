@@ -4,10 +4,6 @@ const articles = {
 const art = articles.articleList;
 
 function find(title) {
-  console.log('find');
-  console.log(title);
-
-
   let found = false;
   art.forEach(article => {
     if (article.urlTitle === encodeURI(title)) {
@@ -50,9 +46,6 @@ function change(data, title) {
 };
 
 function remove(title) {
-  console.log('delete');
-  console.log(title);
-
   let found = false;
   art.forEach(article => {
     if (article.urlTitle === encodeURI(title)) {

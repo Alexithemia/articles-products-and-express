@@ -7,18 +7,18 @@ module.exports = function (req, res, next) {
 
   function postCheck(req, res, next) {
     if (!req.body.name || !req.body.price || !req.body.inventory || Object.keys(req.body).length > 3) {
-      return res.redirect('/products/new')
+      return res.redirect(400, '/products/new')
     }
     next();
   }
 
   function putCheck(req, res, next) {
     if (Object.keys(req.body).length > 3) {
-      return res.redirect('/products/edit');
+      return res.redirect(400, '/products/edit');
     }
     for (const key in req.body) {
       if (!keyMap[key]) {
-        return res.redirect('/products/edit');
+        return res.redirect(400, '/products/edit');
       }
     }
     next();
