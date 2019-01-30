@@ -3,6 +3,8 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const products = require('./routes/products');
 const articles = require('./routes/articles');
+const pValid = require('./prodValidator');
+const aValid = require('./artValidator');
 const methodOverride = require('method-override');
 const fs = require('fs');
 
@@ -15,22 +17,25 @@ app.set('view engine', '.hbs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride('_method'));
+
 app.use(function (req, res, next) {
   let time = new Date();
-  console.log(req.method);
-  console.log(req.path);
-  console.log(time);
-  fs.appendFile('./logs/request.log', `${req.method} ${req.path} ${time}\n`, function (err) {
+  fs.appendFile(`./logs/${time.getFullYear()}.${time.getMonth()}-${time.getDay()}.log`, `${req.method} ${req.path} ${time}\n`, function (err) {
     if (err) throw err;
-    console.log('Updated!');
   });
-
-
   next();
 })
 
 app.use('/products', products);
 
+app.use('/articles', function (req, res, next) {
+  console.log(req.headers.version);
+  if (req.headers.version === '1.0') {
+    next();
+  } else {
+    res.json({ "error": "bad headers" });
+  }
+})
 app.use('/articles', articles);
 
 app.listen(PORT, function () {
