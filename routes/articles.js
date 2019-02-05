@@ -4,7 +4,9 @@ const knex = require('../database');
 
 router.route('/')
   .get(function (req, res) {
-    knex.select('urltitle', 'title', 'author', 'body', 'urltitle').from('articles').orderBy('updated_at', 'desc')
+    knex.select('urltitle', 'title', 'author', 'body', 'urltitle')
+      .from('articles')
+      .orderBy('updated_at', 'desc')
       .then(function (articles) {
         res.render('articles/index', { articles });
       })
@@ -33,7 +35,9 @@ router.route('/new')
 
 router.route('/:title')
   .get(function (req, res) {
-    knex.select('urltitle', 'title', 'author', 'body').from('articles').where('urltitle', encodeURI(req.params.title.toLowerCase()))
+    knex.select('urltitle', 'title', 'author', 'body')
+      .from('articles')
+      .where('urltitle', encodeURI(req.params.title.toLowerCase()))
       .then(function (article) {
         if (article.length) {
           res.render('articles/article', article[0]);
@@ -44,7 +48,9 @@ router.route('/:title')
   })
 
   .put(function (req, res) {
-    knex.select('title', 'author', 'body').from('articles').where('urltitle', encodeURI(req.params.title.toLowerCase()))
+    knex.select('title', 'author', 'body')
+      .from('articles')
+      .where('urltitle', encodeURI(req.params.title.toLowerCase()))
       .then(function (article) {
         if (article.length) {
           let artObj = req.body;
@@ -52,7 +58,9 @@ router.route('/:title')
           if (artObj.title) {
             artObj.urltitle = encodeURI(artObj.title.toLowerCase());
           };
-          knex('articles').where('urltitle', encodeURI(req.params.title.toLowerCase())).update(artObj)
+          knex('articles')
+            .where('urltitle', encodeURI(req.params.title.toLowerCase()))
+            .update(artObj)
             .then(function (result) {
               if (artObj.urltitle) {
                 res.redirect('/articles/' + artObj.urltitle);
@@ -73,7 +81,8 @@ router.route('/:title')
   })
 
   .delete(function (req, res) {
-    knex('articles').where('urltitle', encodeURI(req.params.title.toLowerCase())).del()
+    knex('articles')
+      .where('urltitle', encodeURI(req.params.title.toLowerCase())).del()
       .then(function () {
         res.redirect('/articles');
       })
@@ -84,7 +93,8 @@ router.route('/:title')
 
 router.route('/:title/edit')
   .get(function (req, res) {
-    knex.select('title', 'author', 'body', 'urltitle').from('articles').where('urltitle', encodeURI(req.params.title.toLowerCase()))
+    knex.select('title', 'author', 'body', 'urltitle')
+      .from('articles').where('urltitle', encodeURI(req.params.title.toLowerCase()))
       .then(function (article) {
         if (article.length) {
           article[0].origtitle = article[0].title;

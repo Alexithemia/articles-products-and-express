@@ -19,7 +19,6 @@ function putCheck(req, res, next) {
   }
   for (const key in req.body) {
     if (!keyMap[key]) {
-      console.log(req.body);
       return res.redirect(400, '/articles/edit');
     }
   }

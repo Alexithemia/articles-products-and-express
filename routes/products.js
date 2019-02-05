@@ -4,7 +4,8 @@ const knex = require('../database');
 
 router.route('/')
   .get(function (req, res) {
-    knex.select('id', 'name', 'price', 'inventory').from('products')
+    knex.select('id', 'name', 'price', 'inventory')
+      .from('products')
       .then(function (products) {
         res.render('products/index', { products });
       })
@@ -14,7 +15,8 @@ router.route('/')
   })
 
   .post(function (req, res) {
-    knex('products').insert(req.body)
+    knex('products')
+      .insert(req.body)
       .then(function () {
         knex.select('id').from('products').where('name', req.body.name)
           .then(function (product) {
@@ -33,7 +35,9 @@ router.route('/new')
 
 router.route('/:id')
   .get(function (req, res) {
-    knex.select('id', 'name', 'price', 'inventory').from('products').where('id', req.params.id)
+    knex.select('id', 'name', 'price', 'inventory')
+      .from('products')
+      .where('id', req.params.id)
       .then(function (product) {
         if (product.length) {
           res.render('products/product', product[0]);
@@ -47,12 +51,16 @@ router.route('/:id')
   })
 
   .put(function (req, res) {
-    knex.select('name', 'price', 'inventory').from('products').where('id', req.params.id)
+    knex.select('name', 'price', 'inventory')
+      .from('products')
+      .where('id', req.params.id)
       .then(function (product) {
         if (product.length) {
           let prodObj = req.body;
           delete prodObj._method;
-          knex('products').where('id', req.params.id).update(prodObj)
+          knex('products')
+            .where('id', req.params.id)
+            .update(prodObj)
             .then(function (result) {
               res.redirect('/products/' + req.params.id);
             })
@@ -71,7 +79,9 @@ router.route('/:id')
   })
 
   .delete(function (req, res) {
-    knex('products').where('id', req.params.id).del()
+    knex('products')
+      .where('id', req.params.id)
+      .del()
       .then(function () {
         res.redirect('/products');
       })
@@ -82,7 +92,8 @@ router.route('/:id')
 
 router.route('/:id/edit')
   .get(function (req, res) {
-    knex.select('id', 'name', 'price', 'inventory').from('products').where('id', req.params.id)
+    knex.select('id', 'name', 'price', 'inventory').from('products')
+      .where('id', req.params.id)
       .then(function (product) {
         if (product.length) {
           res.render('products/edit', product[0]);

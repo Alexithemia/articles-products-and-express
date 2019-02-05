@@ -12,16 +12,6 @@ module.exports = {
     }
   },
 
-  knex: {
-    client: 'pg',
-    connection: {
-      host: 'localhost',
-      user: 'alexithemia',
-      password: 'password',
-      database: 'art_and_prod'
-    }
-  },
-
   staging: {
     client: 'postgresql',
     connection: {

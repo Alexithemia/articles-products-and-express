@@ -24,16 +24,3 @@ CREATE TABLE articles (
   created_at TIMESTAMP NOT NULL DEFAULT now(),
   updated_at TIMESTAMP NOT NULL DEFAULT now()
 );
-
-INSERT INTO products (name, price, inventory)
-  VALUES
-    ('cookie', '4.00', 26),
-    ('pizza', '5.00', 22);
-
-INSERT INTO articles (title, author, body, urltitle)
-  VALUES
-    ('How to downsize', 'Kondo', 'aksjfvasjbjakhbsjkb', 'how%20to%20downsize'),
-    ('build a house', 'Contractor', 'aksjfvasjmvgmhukhkb', 'build%20a%20house');
-
-SELECT * FROM products;
-SELECT * FROM articles;
