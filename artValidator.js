@@ -1,32 +1,31 @@
-module.exports = function (req, res, next) {
-  let keyMap = {
-    title: true,
-    author: true,
-    body: true
-  }
+let keyMap = {
+  _method: true,
+  urltitle: true,
+  title: true,
+  author: true,
+  body: true
+}
 
-  function postCheck(req, res, next) {
-    if (!req.body.title || !req.body.author || !req.body.body || Object.keys(req.body).length > 3) {
-      return res.redirect(400, '/articles/new');
-    }
-    next();
+function postCheck(req, res, next) {
+  if (!req.body.title || !req.body.author || !req.body.body || Object.keys(req.body).length > 3) {
+    return res.redirect(400, '/articles/new');
   }
+  next();
+}
 
-  function putCheck(req, res, next) {
-    if (Object.keys(req.body).length > 3) {
+function putCheck(req, res, next) {
+  if (Object.keys(req.body).length > 4) {
+    return res.redirect(400, '/articles/edit');
+  }
+  for (const key in req.body) {
+    if (!keyMap[key]) {
       return res.redirect(400, '/articles/edit');
     }
-    for (const key in req.body) {
-      if (!keyMap[key]) {
-        return res.redirect(400, '/articles/edit');
-      }
-    }
-    next();
   }
+  next();
+}
 
-  // if (req.headers.version !== '1.0') {
-  //   res.json({ "error": "bad headers" });
-  // } else {
+module.exports = function (req, res, next) {
   switch (req.method) {
     case 'GET':
       next();
@@ -44,5 +43,4 @@ module.exports = function (req, res, next) {
       res.end('Method not supported')
       break;
   }
-
 }

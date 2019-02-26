@@ -1,3 +1,8 @@
-<h1>Title: {{this.title}}</h1>
-<h2>Author: {{this.author}}</h2>
-<p>{{this.body}}</p>
+<h1>Title: {{title}}</h1>
+<h2>Author: {{author}}</h2>
+<p>{{body}}</p>
+<a href='{{urltitle}}/edit'>Edit?</a>
+<form action="{{urltitle}}?_method=DELETE" method="post">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete?">
+</form>
